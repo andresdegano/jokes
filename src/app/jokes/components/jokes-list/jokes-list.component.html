@@ -1,0 +1,49 @@
+<table *ngIf="!isMobile" mat-table [dataSource]="dataSource || []" matSort (matSortChange)="onSortChange.emit($event)">
+  <ng-container matColumnDef="Title">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Title</th>
+    <td mat-cell *matCellDef="let joke">{{ joke.Title }}</td>
+  </ng-container>
+  <ng-container matColumnDef="Author">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Author</th>
+    <td mat-cell *matCellDef="let joke">{{ joke.Author | emailObfuscation}}</td>
+  </ng-container>
+  <ng-container matColumnDef="CreatedAt">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>CreatedAt</th>
+    <td mat-cell *matCellDef="let joke">{{ joke.CreatedAt | date: 'dd MMM YYYY' }}</td>
+  </ng-container>
+  <ng-container matColumnDef="Views">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Views</th>
+    <td mat-cell *matCellDef="let joke"><span class="font-semibold {{getViewsColor(joke.Views || 0)}}">{{ joke.Views
+        }}</span></td>
+  </ng-container>
+  <tr mat-header-row *matHeaderRowDef="['Title', 'Author', 'CreatedAt', 'Views']"></tr>
+  <tr mat-row *matRowDef="
+      let joke;
+      columns: ['Title', 'Author', 'CreatedAt', 'Views']
+    " (click)="onSelectJoke.emit(joke)" class="cursor-pointer hover:!bg-gray-200 dark:hover:!bg-gray-600"></tr>
+</table>
+<ng-container *ngIf="isMobile">
+  <div *ngFor="let item of jokes?.jokes" (click)="onSelectJoke.emit(item)"
+    class="p-4 border-b hover:!bg-gray-200 dark:hover:!bg-gray-600 cursor-pointer">
+    <div class="flex flex-row flex-wrap gap-3">
+      <span class="text-base font-semibold">Title: </span>
+      <span>{{item.Title}}</span>
+    </div>
+    <div class="flex flex-row flex-wrap gap-3">
+      <span class="text-base font-semibold">Author: </span>
+      <span>{{item.Author | emailObfuscation}}</span>
+    </div>
+    <div class="flex flex-row flex-wrap gap-3">
+      <span class="text-base font-semibold">CreatedAt: </span>
+      <span>{{ item.CreatedAt | date: 'dd MMM YYYY' }}</span>
+    </div>
+    <div class="flex flex-row flex-wrap gap-3">
+      <span class="text-base font-semibold">Views: </span>
+      <span class="font-semibold {{getViewsColor(item.Views || 0)}}">{{ item.Views }}</span>
+    </div>
+  </div>
+</ng-container>
+
+<mat-paginator (page)="onPaginationChange.emit($event)" [pageIndex]="jokes?.page" [length]="jokes?.total || 0"
+  [pageSizeOptions]="[5, 10]" showFirstLastButtons>
+</mat-paginator>

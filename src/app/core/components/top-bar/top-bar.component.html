@@ -1,0 +1,25 @@
+<mat-toolbar>
+  <ng-container *ngIf="loggedIn$ | async as loggedIn">
+    <button mat-button [matMenuTriggerFor]="menu">
+      <div class=" pt-4  flex flex-row align-middle">
+        <mat-icon>account_circle</mat-icon>
+        <div class="pl-2 text-base font-semibold hover:font-bold">
+          {{loggedIn.name}}
+        </div>
+      </div>
+    </button>
+    <mat-menu #menu="matMenu">
+      <button (click)="logOut()" mat-menu-item>Log Out</button>
+    </mat-menu></ng-container>
+  <ng-container *ngIf="!(loggedIn$ | async)">
+    <div class="pt-4 text-base font-semibold hover:font-bold">
+      Jokes
+    </div>
+  </ng-container>
+
+  <div class="flex-grow"></div>
+  <mat-slide-toggle [formControl]="toggleControl" class="mr-4">
+  </mat-slide-toggle>
+  <mat-icon *ngIf="!toggleControl?.value">light_mode</mat-icon>
+  <mat-icon *ngIf="toggleControl?.value">dark_mode</mat-icon>
+</mat-toolbar>

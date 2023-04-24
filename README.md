@@ -1,3 +1,10 @@
+## Angular Front End
+  To start the project
+  ```BASH
+    npm install -g @angular/cli
+    npm install
+    ng serve --open
+  ```
 ## API
 
 Endpoint URL: https://retoolapi.dev/zu9TVE/jokes

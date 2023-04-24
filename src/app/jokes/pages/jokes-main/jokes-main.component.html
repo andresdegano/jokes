@@ -1,0 +1,36 @@
+<mat-card class="p-8 px-8">
+  <mat-card-title>
+    <div class="text-lg font-semibold mb-6">
+      Jokes List
+    </div>
+  </mat-card-title>
+  <mat-card-content>
+    <div class="flex flex-wrap-reverse">
+      <div class="flex-1">
+        <form [formGroup]="form">
+          <mat-form-field class="mr-4" appearance="fill">
+            <mat-label>SearchText</mat-label>
+            <input matInput type="text" formControlName="query" appInputUppercase />
+            <button matSuffix mat-icon-button aria-label="searh">
+              <mat-icon>search</mat-icon>
+            </button>
+          </mat-form-field>
+        </form>
+      </div>
+      <div class="flex-4">
+        <button routerLink="/joke/new" mat-raised-button color="primary">
+          Add new Joke
+        </button>
+      </div>
+    </div>
+    <div *ngIf="isLoading" class="full-width">
+      <mat-spinner class="m-auto"></mat-spinner>
+    </div>
+    <div *ngIf="!isLoading && error" class="full-width">
+      <h2>There was an error fetching the data</h2>
+    </div>
+
+    <app-jokes-list [hidden]="isLoading || error" [jokes]="(jokes$ | async)" (onSelectJoke)="onEdit($event)"
+      (onPaginationChange)="onPaginationChange($event)" (onSortChange)="onSortChange($event)"></app-jokes-list>
+  </mat-card-content>
+</mat-card>

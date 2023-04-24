@@ -1,0 +1,36 @@
+<form [formGroup]="form">
+  <div class="flex flex-col">
+    <mat-form-field appearance="fill">
+      <mat-label>Email</mat-label>
+      <input
+        matInput
+        type="email"
+        formControlName="email"
+        required
+      />
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Password</mat-label>
+      <input
+        matInput
+        type="password"
+        formControlName="password"
+        required
+      />
+    </mat-form-field>
+  </div>
+</form>
+<div class="flex items-end">
+  <mat-spinner *ngIf="isLoading" [diameter]="50"></mat-spinner>
+  <button
+    *ngIf="!isLoading"
+    class="mr-2"
+    type="submit"
+    [disabled]="!form.valid"
+    mat-raised-button
+    (click)="logIn()"
+    color="primary"
+  >
+    Log In
+  </button>
+</div>

@@ -1,0 +1,15 @@
+<mat-card class="p-8">
+  <mat-card-content>
+    <div class="flex flex-row w-full pb-4">
+      <div class="text-lg font-semibold mb-4 flex-grow">
+        {{ title }}
+      </div>
+      <div>
+        <button *ngIf="id && !isLoading" (click)="onRemove()" mat-mini-fab color="warn" aria-label="delete">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </div>
+    </div>
+    <app-joke-form [isLoading]="isLoading" [(joke)]="newJoke" (onSave)="save()" (onCancel)="goHome()"></app-joke-form>
+  </mat-card-content>
+</mat-card>
